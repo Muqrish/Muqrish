@@ -32,6 +32,14 @@ class App{
 		const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
 		this.scene.add(ambient);
 
+        this.cube = new THREE.Mesh(
+            new THREE.BoxBufferGeometry(1, 1, 1),
+            new THREE.MeshLambertMaterial({color:'blue'})
+        );
+        this.cube.position.set(0, 1.5, 5);
+        this.scene.add(this.cube);
+
+
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -317,6 +325,10 @@ class App{
 
 	render( timestamp, frame ){
         const dt = this.clock.getDelta();
+
+        this.cube.rotation.y = timestamp / 1000;
+        this.cube.rotation.x = timestamp / 1000; 
+
         
         if (this.renderer.xr.isPresenting){
             let moveGaze = false;
